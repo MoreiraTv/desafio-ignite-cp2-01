@@ -6,10 +6,13 @@ interface IRequest {
 }
 
 class ListAllUsersUseCase {
-  constructor(private usersRepository: IUsersRepository) {}
+  constructor(private usersRepository: IUsersRepository) { }
 
   execute({ user_id }: IRequest): User[] {
-    // Complete aqui
+    const user = this.usersRepository.findById(user_id)
+    if (!user) throw new Error("You are not logged in")
+    if (!user.admin) throw new Error("You are not logged in or you are not an admin!")
+    return this.usersRepository.list()
   }
 }
 
